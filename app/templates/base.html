@@ -1,0 +1,25 @@
+{% from "macros.html" import nav_link with context %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}" />
+        <title>{% block title %}{% endblock %}</title>
+        {% endblock %}
+    </head>
+    <body>
+        <nav>
+            <ul>
+                {% for item in nav_items %}
+                    {{ nav_link(item.endpoint, item.text, active_page) }}
+                {% endfor %}
+            </ul>
+        </nav>
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+        <div id="footer">
+            {% block footer %}&copy; CodePapayas 2026{% endblock %}
+        </div>
+    </body>
+</html>
