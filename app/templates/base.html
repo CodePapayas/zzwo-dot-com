@@ -8,15 +8,17 @@
         {% endblock %}
     </head>
     <body>
-        <nav>
-            <ul>
-                {% for item in nav_items %}
-                    {{ nav_link(item.endpoint, item.text, active_page) }}
-                {% endfor %}
-            </ul>
-        </nav>
-        <div id="content">
-            {% block content %}{% endblock %}
+        <div class="layout">
+            <nav class="site-nav box">
+                <ul>
+                    {% for item in nav_items %}
+                        {{ nav_link(item.endpoint, item.text, active_page) }}
+                    {% endfor %}
+                </ul>
+            </nav>
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div>
         </div>
         <div id="footer">
             {% block footer %}&copy; CodePapayas 2026{% endblock %}

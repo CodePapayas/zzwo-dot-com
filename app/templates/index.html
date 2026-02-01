@@ -1,5 +1,71 @@
 {% extends "base.html" %}
 {% block title %}Home Page{% endblock %}
 {% block content %}
-    <h1>Content</h1>
+    <main class="page">
+        <div class="left-col">
+            <header class="hero box">
+                <img class="avatar" src="{{ url_for('images', path='headshot.jpg') }}" alt="Headshot of Zach">
+                <div class="hero-text">
+                    <p class="eyebrow">Portfolio</p>
+                    <h1 class="header">Zach Olson</h1>
+                    <p class="tagline">Minimal, brutalist design. Clean systems, clean code.</p>
+                </div>
+            </header>
+
+            <section class="box" id="contact">
+                <h2>Contact</h2>
+                <div class="grid">
+                    <div>
+                        <p class="label">Email</p>
+                        <p>yourname@email.com</p>
+                    </div>
+                    <div>
+                        <p class="label">Phone</p>
+                        <p>(555) 555-5555</p>
+                    </div>
+                    <div>
+                        <p class="label">Location</p>
+                        <p>City, State</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="box" id="links">
+                <h2>Links</h2>
+                <ul class="list links">
+                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Resume</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="right-col">
+            <section class="box" id="about">
+                <h2>About Me</h2>
+                <p>Short intro goes here. Your focus, values, and what you like building.</p>
+            </section>
+            <section class="box" id="projects">
+                <h2>Projects</h2>
+                <ul class="list">
+                    <li>
+                        <h3>Project Title</h3>
+                        <p>Short description goes here. Tech stack and what you built.</p>
+                        <p class="meta">Year • Role • Link</p>
+                    </li>
+                    <li>
+                        <h3>Project Title</h3>
+                        <p>Short description goes here. Tech stack and what you built.</p>
+                        <p class="meta">Year • Role • Link</p>
+                    </li>
+                    <li>
+                        <h3>Project Title</h3>
+                        <p>Short description goes here. Tech stack and what you built.</p>
+                        <p class="meta">Year • Role • Link</p>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </main>
 {% endblock %}
