@@ -5,3 +5,4 @@ pydantic-settings
 pytest
 pylint
 ruff
+gunicorn
