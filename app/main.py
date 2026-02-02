@@ -6,15 +6,24 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
+# Resolve paths using pathlib - works regardless of working directory
 APP_DIR = Path(__file__).resolve().parent
 STATIC_DIR = APP_DIR / "static"
 IMAGES_DIR = APP_DIR / "images"
 TEMPLATES_DIR = APP_DIR / "templates"
 
-app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
-app.mount("/images", StaticFiles(directory=str(IMAGES_DIR)), name="images")
+# Verify directories exist at startup
+if not STATIC_DIR.is_dir():
+    raise RuntimeError(f"Static directory not found: {STATIC_DIR}")
+if not IMAGES_DIR.is_dir():
+    raise RuntimeError(f"Images directory not found: {IMAGES_DIR}")
+if not TEMPLATES_DIR.is_dir():
+    raise RuntimeError(f"Templates directory not found: {TEMPLATES_DIR}")
 
-templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/images", StaticFiles(directory=IMAGES_DIR), name="images")
+
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 @app.get("/")
 async def home(request: Request):
