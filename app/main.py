@@ -20,6 +20,7 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 async def home(request: Request):
     nav_items = [
         {"endpoint": "home", "text": "Home"},
+        {"endpoint": "resume", "text": "Resume"},
         {"endpoint": "train", "text": "Train"}
     ]
 
@@ -29,10 +30,24 @@ async def home(request: Request):
     )
 
 
+@app.get("/resume")
+async def resume(request: Request):
+    nav_items = [
+        {"endpoint": "home", "text": "Home"},
+        {"endpoint": "resume", "text": "Resume"},
+        {"endpoint": "train", "text": "Train"},
+    ]
+    return templates.TemplateResponse(
+        "resume.html",
+        {"request": request, "nav_items": nav_items, "active_page": "resume"},
+    )
+
+
 @app.get("/train")
 async def train(request: Request):
     nav_items = [
         {"endpoint": "home", "text": "Home"},
+        {"endpoint": "resume", "text": "Resume"},
         {"endpoint": "train", "text": "Train"},
     ]
     return templates.TemplateResponse(

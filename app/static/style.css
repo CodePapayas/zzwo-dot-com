@@ -1,12 +1,64 @@
-/* Color scheme */
+/* Monochrome scheme
+   --charcoal: #595959 (dark)       → text, borders
+   --grey: #7f7f7f      (mid)        → nav, accents
+   --silver: #a5a5a5    (light)      → cards, highlights
+   --silver-2: #cccccc  (base)       → page background
+   --white-smoke: #f2f2f2 (lightest) → surfaces
+   Original palette preserved below; switch by setting data-theme="original" on <html>.
+*/
 :root {
-    --deep-space-blue: #203552ff;
-    --wheat: #fae0b9ff;
-    --light-cyan: #cdecf4ff;
-    --ink-black: #06101eff;
-    --coffee-bean: #261406ff;
-    --silver: #c0c0c0;
+    --charcoal: #595959;
+    --grey: #7f7f7f;
+    --silver: #a5a5a5;
+    --silver-2: #cccccc;
+    --white-smoke: #f2f2f2;
     --radius: 0;
+
+    --accent-rose: var(--silver);
+
+    --color-text: var(--charcoal);
+    --color-muted: var(--grey);
+    --color-border: var(--charcoal);
+    --color-bg: var(--silver-2);
+    --color-surface: var(--white-smoke);
+    --color-surface-alt: var(--silver);
+    --color-nav-bg: var(--grey);
+    --color-nav-text: var(--white-smoke);
+    --color-nav-hover-bg: var(--silver);
+    --color-link: var(--charcoal);
+    --color-link-hover-bg: var(--accent-rose);
+    --color-hero-bg: var(--silver);
+    --color-accent: var(--grey);
+    --color-list-bg: var(--accent-rose);
+    --color-skill-bg: var(--white-smoke);
+    --color-avatar-bg: var(--grey);
+}
+
+/* Original palette (previous scheme) */
+:root[data-theme="original"] {
+    --charcoal: #071108; /* onyx */
+    --grey: #364652; /* charcoal-blue */
+    --silver: #b3cbb9; /* ash-grey */
+    --silver-2: #cccccc; /* base background */
+    --white-smoke: #c8ffbe; /* tea-green */
+    --accent-rose: #fac8cd; /* cotton-rose */
+
+    --color-text: #071108;
+    --color-muted: #364652;
+    --color-border: #071108;
+    --color-bg: #cccccc;
+    --color-surface: #b3cbb9;
+    --color-surface-alt: #c8ffbe;
+    --color-nav-bg: #364652;
+    --color-nav-text: #c8ffbe;
+    --color-nav-hover-bg: #c8ffbe;
+    --color-link: #364652;
+    --color-link-hover-bg: #fac8cd;
+    --color-hero-bg: #c8ffbe;
+    --color-accent: #364652;
+    --color-list-bg: #fac8cd;
+    --color-skill-bg: #b3cbb9;
+    --color-avatar-bg: #071108;
 }
 
 * {
@@ -16,20 +68,25 @@
 body {
     margin: 0;
     font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    background: var(--silver);
-    color: var(--ink-black);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.5;
 }
 
+/* Links: charcoal-blue for good contrast, pink on hover */
 a {
-    color: inherit;
+    color: var(--color-link);
     text-decoration: none;
-    border-bottom: 2px solid var(--ink-black);
+    border-bottom: 2px solid var(--color-link);
+    transition: background 0.15s ease, color 0.15s ease;
 }
 
 a:hover {
-    background: var(--light-cyan);
+    background: var(--color-link-hover-bg);
+    color: var(--color-text);
 }
 
+/* Layout */
 .layout {
     max-width: 980px;
     margin: 0 auto;
@@ -46,9 +103,6 @@ a:hover {
 
 .site-nav {
     grid-column: 1 / -1;
-}
-
-.site-nav {
     position: relative;
     z-index: 3;
 }
@@ -61,8 +115,13 @@ a:hover {
 #footer {
     position: relative;
     z-index: 3;
+    text-align: center;
+    padding: 20px;
+    color: var(--color-muted);
+    font-size: 14px;
 }
 
+/* Navigation: charcoal-blue bg, light text for contrast */
 .site-nav ul {
     list-style: none;
     padding: 0;
@@ -74,11 +133,20 @@ a:hover {
 
 .site-nav a {
     display: inline-block;
-    padding: 6px 8px;
-    border: 2px solid var(--ink-black);
-    background: var(--silver);
+    padding: 8px 14px;
+    border: 2px solid var(--color-border);
+    background: var(--color-nav-bg);
+    color: var(--color-nav-text);
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
 }
 
+.site-nav a:hover {
+    background: var(--color-nav-hover-bg);
+    color: var(--color-text);
+}
+
+/* Page grid */
 .page {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -92,19 +160,22 @@ a:hover {
     align-content: start;
 }
 
+/* Box: ash-grey background, onyx border */
 .box {
-    border: 3px solid var(--ink-black);
-    background: var(--wheat);
+    border: 3px solid var(--color-border);
+    background: var(--color-surface);
     padding: 24px;
     border-radius: var(--radius);
 }
 
+/* Hero: tea-green background for emphasis */
 .hero {
     display: flex;
     gap: 20px;
     align-items: center;
     justify-content: space-between;
-    background: var(--light-cyan);
+    background: var(--color-hero-bg);
+    border: 3px solid var(--color-border);
 }
 
 .hero-text {
@@ -118,38 +189,48 @@ a:hover {
     letter-spacing: 2px;
     font-weight: 700;
     font-size: 12px;
+    color: var(--color-muted);
 }
 
 .header {
     margin: 0;
     font-size: 44px;
     line-height: 1;
+    color: var(--color-text);
 }
 
 .tagline {
     margin: 0;
     font-size: 16px;
+    color: var(--color-text);
 }
 
+/* Avatar: charcoal-blue border accent */
 .avatar {
     width: 160px;
     height: 160px;
     object-fit: cover;
     border-radius: var(--radius);
-    border: 3px solid var(--ink-black);
-    background: var(--coffee-bean);
+    border: 4px solid var(--color-muted);
+    background: var(--color-avatar-bg);
 }
 
+/* Headings */
 h2 {
     margin: 0 0 12px 0;
     font-size: 24px;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 8px;
 }
 
 h3 {
     margin: 0 0 6px 0;
     font-size: 18px;
+    color: var(--color-muted);
 }
 
+/* Lists: cotton-rose background for items */
 .list {
     list-style: none;
     padding: 0;
@@ -159,10 +240,15 @@ h3 {
 }
 
 .list li {
-    border: 2px solid var(--ink-black);
-    background: var(--silver);
+    border: 2px solid var(--color-border);
+    background: var(--color-list-bg);
     padding: 16px;
     border-radius: var(--radius);
+    color: var(--color-text);
+}
+
+.list li p {
+    margin: 8px 0;
 }
 
 .meta {
@@ -170,8 +256,10 @@ h3 {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: var(--color-muted);
 }
 
+/* Grid and labels */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -183,12 +271,21 @@ h3 {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: var(--color-muted);
+    font-weight: 700;
 }
 
+/* Links section: tea-green background */
 .links {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 
+.links li {
+    background: var(--color-surface-alt);
+    text-align: center;
+}
+
+/* Responsive */
 @media (max-width: 700px) {
     .layout {
         grid-template-columns: 1fr;
@@ -215,8 +312,13 @@ h3 {
         width: 140px;
         height: 140px;
     }
+
+    .header {
+        font-size: 32px;
+    }
 }
 
+/* Train page */
 .train-page {
     position: relative;
     min-height: 100vh;
@@ -247,5 +349,154 @@ h3 {
 .train-caption {
     margin: 0;
     display: inline-block;
+    background: var(--color-surface);
+    padding: 12px 20px;
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+}
+
+/* Resume page styles */
+.resume {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.resume-header {
+    background: var(--color-hero-bg);
+    border: 3px solid var(--color-border);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.resume-header h1 {
+    margin: 0 0 12px 0;
+    font-size: 36px;
+    color: var(--color-text);
+}
+
+.contact-info {
+    margin: 0;
+    font-size: 14px;
+    color: var(--color-muted);
+    line-height: 1.8;
+}
+
+.resume-section {
+    background: var(--color-surface);
+    border: 3px solid var(--color-border);
+    padding: 24px 32px;
+    margin-bottom: 20px;
+}
+
+.resume-section h2 {
+    margin: 0 0 16px 0;
+    font-size: 20px;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.summary p {
+    margin: 0;
+    line-height: 1.7;
+}
+
+.job {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-muted);
+}
+
+.job:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.job h3 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    color: var(--color-text);
+}
+
+.job-meta {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    color: var(--color-muted);
+    font-style: italic;
+}
+
+.job h4 {
+    margin: 16px 0 8px 0;
+    font-size: 15px;
+    color: var(--color-muted);
+    font-weight: 600;
+}
+
+.job ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.job li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.skill-category {
+    background: var(--color-skill-bg);
+    border: 2px solid var(--color-muted);
+    padding: 14px 18px;
+}
+
+.skill-category strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--color-text);
+}
+
+.skill-category p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--color-muted);
+}
+
+.degree {
+    margin-bottom: 12px;
+}
+
+.degree:last-child {
+    margin-bottom: 0;
+}
+
+.certifications p {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .resume-header {
+        padding: 20px;
+    }
+
+    .resume-header h1 {
+        font-size: 28px;
+    }
+
+    .resume-section {
+        padding: 20px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
 }
 

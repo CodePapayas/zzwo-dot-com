@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Resume{% endblock %}
+{% block content %}
+<div class="resume">
+  <header class="resume-header">
+    <h1>Zachary Wilkins-Olson</h1>
+    <p class="contact-info">
+      PNW | zzwo@codepapayas.com | (206) 397-8306
+    </p>
+  </header>
+
+  <section class="resume-section summary">
+    <h2>HealthTech Operations | HIPAA Security Officer</h2>
+    <p>IT leader who built and operates the technology function for a 100+ person healthcare organization. Manage $500K annual budget, direct a 2-3 person dedicated engineering team through MSP partnership, and serve as HIPAA Security Officer. Established the organization's first internal IT department in 2024, executing a strategic restructuring that eliminated $187K in redundant headcount while improving service delivery. Track record of $350K+ in documented cost savings through vendor optimization, system migrations, and process automation. Background in Computer Science with active contributions to enterprise-scale open source projects.</p>
+  </section>
+
+  <section class="resume-section experience">
+    <h2>Professional Experience</h2>
+    
+    <div class="job">
+      <h3>IT Manager & HIPAA Security Officer</h3>
+      <p class="job-meta">Center for Family Development | Eugene, OR | July 2024 – Present</p>
+      
+      <h4>Department & Team Leadership</h4>
+      <ul>
+        <li>Established the organization's inaugural internal IT department, transitioning from 100% outsourced MSP model to strategic hybrid operation with internal leadership and dedicated external engineering resources</li>
+        <li>Direct 2-3 dedicated engineers and coordinate 6-person technical team through $220K managed services partnership, providing operational direction and performance accountability</li>
+        <li>Assessed inherited 3-person department and executed restructuring that eliminated $187K in redundant headcount (DBA and SysAdmin roles) while maintaining service delivery through optimized MSP model</li>
+        <li>Engineered first comprehensive network map and systems architecture documentation, establishing organizational "source of truth" for security planning and business continuity</li>
+      </ul>
+
+      <h4>Budget & Vendor Management</h4>
+      <ul>
+        <li>Manage $500K+ annual IT budget across multiple vendor relationships including EHR systems, security platforms, telehealth infrastructure, and MSP partnerships</li>
+        <li>Negotiated 15% per-user cost reduction on 2-year MSP contract while codifying operational protocols to prevent scope creep and define service boundaries</li>
+        <li>Led EHR vendor evaluation, negotiating migration from $300K legacy renewal to $160K Valant contract—$140K annual savings (47%)</li>
+        <li>Led fleet-wide migration from Adobe to Foxit PDF, converting monthly recurring costs to fixed annual budget and reducing licensing expenditure by approximately 80%</li>
+        <li>Serve as primary liaison between state agencies and EHR vendor for EDI certification and mandatory reporting compliance</li>
+      </ul>
+
+      <h4>Technical Transformation & Security</h4>
+      <ul>
+        <li>Orchestrated end-to-end migration of 15,000+ patient records from 13-year-old CareLogic system to Valant EHR cloud architecture, ensuring zero data loss and 99.9% uptime</li>
+        <li>Modernized 130+ devices from BYOD to company-managed Zero Trust environment with MFA and always-on VPNs, reducing HIPAA incidents by 75% YoY</li>
+        <li>Architected deployment of browser-based AI scribes for clinical staff and ChatGPT for administrative workflows, supported by custom HIPAA-compliant governance framework</li>
+        <li>Developed Python and SQL-based automated intake system processing 150+ monthly submissions, eliminating manual phone-based legacy workflows entirely</li>
+        <li>Re-engineered Zendesk ticketing system with KPI-driven response protocols, halving maximum SLA response times from 48 to 24 hours</li>
+        <li>Serve as HIPAA Security Officer, maintaining 100% compliance through annual SRAs, policy development, and incident response protocols</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>System Administrator</h3>
+      <p class="job-meta">Center for Family Development | Eugene, OR | May 2018 – July 2024</p>
+      
+      <h4>COVID-19 Crisis Response & Business Continuity</h4>
+      <ul>
+        <li>Led immediate telehealth transformation during March 2020 lockdown, enabling 100% remote operations within 2 weeks for 100+ staff</li>
+        <li>Managed technology infrastructure supporting transition from 100% in-person to 75% telehealth services</li>
+        <li>Authored comprehensive telehealth policies and procedures ensuring regulatory compliance</li>
+      </ul>
+
+      <h4>Infrastructure & Operations</h4>
+      <ul>
+        <li>Managed CareLogic EHR system, ensuring 99.9% uptime and data integrity</li>
+        <li>Implemented KPI-driven Zendesk ticketing system achieving 24-hour SLA compliance</li>
+        <li>Deployed Beekeeper, Zoom Enterprise, and other SaaS platforms while optimizing licensing costs</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="resume-section skills">
+    <h2>Technical Proficiencies</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <strong>Infrastructure & Systems</strong>
+        <p>VMware, Azure, Endpoint Management, Zero Trust Architecture, SQL Server</p>
+      </div>
+      <div class="skill-category">
+        <strong>Healthcare Technology</strong>
+        <p>Valant EHR, CareLogic, EDI/HL7, HIPAA Compliance, Telehealth Platforms</p>
+      </div>
+      <div class="skill-category">
+        <strong>Security</strong>
+        <p>MFA Implementation, VPN Configuration, Security Audits, Incident Response</p>
+      </div>
+      <div class="skill-category">
+        <strong>Development</strong>
+        <p>Python, SQL (T-SQL/MySQL/SQLite), JavaScript, Flask, Power Automate</p>
+      </div>
+      <div class="skill-category">
+        <strong>Business Systems</strong>
+        <p>Zendesk, SharePoint, SSRS, Beekeeper, Zoom Enterprise</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="resume-section education">
+    <h2>Education</h2>
+    <div class="degree">
+      <strong>Bachelor of Science in Computer Science</strong> (in progress)<br>
+      Oregon State University
+    </div>
+    <div class="degree">
+      <strong>Associate Degree in General Studies</strong><br>
+      Lane Community College
+    </div>
+  </section>
+
+  <section class="resume-section certifications">
+    <h2>Certifications</h2>
+    <p>Certified Scrum Master (CSM)</p>
+  </section>
+</div>
+{% endblock %}

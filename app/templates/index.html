@@ -6,9 +6,9 @@
             <header class="hero box">
                 <img class="avatar" src="{{ url_for('images', path='headshot.jpg') }}" alt="Headshot of Zach">
                 <div class="hero-text">
-                    <p class="eyebrow">Portfolio</p>
-                    <h1 class="header">Zach Olson</h1>
-                    <p class="tagline">Minimal, brutalist design. Clean systems, clean code.</p>
+                    <p class="eyebrow">CodePapayas</p>
+                    <h1 class="header">Zach Wilkins- Olson</h1>
+                    <p class="tagline">Engineering Manager | HealthTech Architect | Python & AI Governance | CS @ Oregon State</p>
                 </div>
             </header>
 
@@ -17,15 +17,15 @@
                 <div class="grid">
                     <div>
                         <p class="label">Email</p>
-                        <p>yourname@email.com</p>
+                        <p>zzwo@codepapayas.com</p>
                     </div>
                     <div>
                         <p class="label">Phone</p>
-                        <p>(555) 555-5555</p>
+                        <p>(206) 397-8306</p>
                     </div>
                     <div>
                         <p class="label">Location</p>
-                        <p>City, State</p>
+                        <p>PNW | Remote</p>
                     </div>
                 </div>
             </section>
@@ -33,10 +33,8 @@
             <section class="box" id="links">
                 <h2>Links</h2>
                 <ul class="list links">
-                    <li><a href="#">GitHub</a></li>
-                    <li><a href="#">LinkedIn</a></li>
-                    <li><a href="#">Resume</a></li>
-                    <li><a href="#">Blog</a></li>
+                    <li><a href="https://github.com/CodePapayas">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/wilkinza/">LinkedIn</a></li>
                 </ul>
             </section>
         </div>
@@ -50,19 +48,27 @@
                 <h2>Projects</h2>
                 <ul class="list">
                     <li>
-                        <h3>Project Title</h3>
-                        <p>Short description goes here. Tech stack and what you built.</p>
-                        <p class="meta">Year • Role • Link</p>
+                        <h3>Pond Spawn</h3>
+                        <p>Artificial life simulation where agents with unique neural network brains evolve through genetic mutation. Each agent perceives its environment, makes decisions via a feedforward network (5→8→8→8→6), and passes mutated genomes to offspring. Built with Python, PyTorch, NumPy, Pygame, and Matplotlib.
+                        </p>
+                        <p>This is an ongoing project. I use this as a sort of sandbox for a prototyping ideas and testing out configurations.</p>
+                        <p><a href="https://github.com/CodePapayas/pond_spawn">Pond Spawn GitHub</a></p>
                     </li>
                     <li>
-                        <h3>Project Title</h3>
-                        <p>Short description goes here. Tech stack and what you built.</p>
-                        <p class="meta">Year • Role • Link</p>
+                        <h3>Pylint (Open Source Contributor)</h3>
+                        <p>
+                            Contributed to the core static analysis engine of Pylint to improve inference accuracy. 
+                            Engineered logic to correctly handle the control flow of <code>unittest.TestCase.fail()</code>, 
+                            preventing false-positive 'used-before-assignment' errors. Additionally, refined the 
+                            inference of <code>pathlib.Path</code> objects to ensure Pylint correctly identifies attributes on joined paths.
+                        </p>
+                        <p><a href="https://github.com/pylint-dev/pylint/issues/10785">Issue #10785 - False positive unreachable error when overload + NoReturn is used</a></p>
+                        <p><a href="https://github.com/pylint-dev/pylint/issues/10743">Issue #10743 - Detect <code>unittest.fail()</code> calls for assignment warning</a></p>
                     </li>
                     <li>
-                        <h3>Project Title</h3>
-                        <p>Short description goes here. Tech stack and what you built.</p>
-                        <p class="meta">Year • Role • Link</p>
+                        <h3>Portfolio Website</h3>
+                        <p>The source code for this portfolio site. A FastAPI app using Pydantic for config validation and Jinja2 for templating. Deployed on Azure App Service with CI/CD and custom domain setup.</p>
+                        <p><a href="https://github.com/CodePapayas/zzwo-dot-com">Website Source Code</a></p>
                     </li>
                 </ul>
             </section>
