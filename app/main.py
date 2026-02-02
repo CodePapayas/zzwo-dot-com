@@ -1,10 +1,17 @@
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
-app = FastAPI()
+# Support Azure's forwarded headers / root path
+root_path = os.environ.get("ROOT_PATH", "")
+app = FastAPI(root_path=root_path)
+
+# Trust proxy headers so url_for generates https:// URLs behind Azure's reverse proxy
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts=["*"])
 
 # Resolve paths using pathlib - works regardless of working directory
 APP_DIR = Path(__file__).resolve().parent
