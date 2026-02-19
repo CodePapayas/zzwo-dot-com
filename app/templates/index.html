@@ -4,11 +4,14 @@
     <main class="page">
         <div class="left-col">
             <header class="hero box">
-                <img class="avatar" src="{{ url_for('images', path='headshot.jpg') }}" alt="Headshot of Zach">
+                <img class="avatar"
+                     src="{{ url_for('images', path='headshot.jpg') }}"
+                     alt="Headshot of Zach">
                 <div class="hero-text">
                     <p class="eyebrow">CodePapayas</p>
                     <h1 class="header">Zach Wilkins- Olson</h1>
-                    <p class="tagline">Engineering Manager | HealthTech Architect | Python & AI Governance | CS @ Oregon State</p>
+                    <p class="tagline">Engineering Manager | HealthTech Architect |
+                        Python & AI Governance | CS @ Oregon State</p>
                 </div>
             </header>
 
@@ -42,35 +45,74 @@
         <div class="right-col">
             <section class="box" id="about">
                 <h2>Who I Am</h2>
-                <p>I build the backend systems that keep organizations moving. With a background in healthcare IT and a focus on Python-driven simulations and APIs, I create software that balances immediate utility with long-term stability.</p>
-
-                <p>I believe that as technology evolves unpredictably, our tools must be built with clarity and correctness at their core. My work, ranging from production healthcare tools to open-source contributions, is centered on solving real-world problems for my community and beyond. I am a firm believer in the power of remote-first collaboration and pragmatic engineering to solve the world's most unpredictable problems.</p>
+                <h3>I'm Zach.</h3> 
+                <p>I live in the Pacific Northwest and work in the behavioral 
+                   health industry protecting and connecting sensitive data.
+                </p>
+                <p>My work, ranging from production healthcare tools to 
+                   open-source contributions, is centered on solving real-world problems 
+                   for my community and beyond. Safely transmitting and storing your 
+                   sensitive data is my first and main goal, and this mission has only 
+                   grown more important as technology progresses down the unpredictable 
+                   path it always takes. Always open to discussion and collaboration.
+                </p>
             </section>
             <section class="box" id="projects">
                 <h2>What I'm Working On and What I've Done</h2>
                 <ul class="list">
                     <li>
                         <h3>Pond Spawn</h3>
-                        <p>Artificial life simulation where agents with unique neural network brains evolve through genetic mutation. Each agent perceives its environment, makes decisions via a feedforward network (5→8→8→8→6), and passes mutated genomes to offspring. Built with Python, PyTorch, NumPy, Pygame, and Matplotlib.
+                        <p>Artificial life simulation where agents with unique neural
+                            network brains evolve through genetic mutation. Each agent
+                            perceives its environment, makes decisions via a feedforward
+                            network (5→8→8→8→6), and passes mutated genomes to offspring.
+                            Built with Python, PyTorch, NumPy, Pygame, and Matplotlib.
                         </p>
-                        <p>This is an ongoing project. I use this as a sort of sandbox for a prototyping ideas and testing out configurations.</p>
-                        <p><a href="https://github.com/CodePapayas/pond_spawn">Pond Spawn GitHub</a></p>
+                        <p>This is an ongoing project. I use this as a sort of sandbox
+                            for a prototyping ideas and testing out configurations. The most 
+                            rewarding part of this has been my increased understanding of neural 
+                            networks. I find it refreshing to be able to talk about convoluted 
+                            neural networks and actually know what I'm talking about.</p>
+                        <p><a href="https://github.com/CodePapayas/pond_spawn">
+                            Pond Spawn GitHub</a></p>
                     </li>
                     <li>
                         <h3>Pylint (Open Source Contributor)</h3>
                         <p>
-                            Contributed to the core static analysis engine of Pylint to improve inference accuracy. 
-                            Engineered logic to correctly handle the control flow of <code>unittest.TestCase.fail()</code>, 
-                            preventing false-positive 'used-before-assignment' errors. Additionally, refined the 
-                            inference of <code>pathlib.Path</code> objects to ensure Pylint correctly identifies attributes on joined paths.
+                            Contributed to the core static analysis engine of Pylint
+                            to improve inference accuracy. Engineered logic to correctly
+                            handle the control flow of
+                            <code>unittest.TestCase.fail()</code>, preventing
+                            false-positive 'used-before-assignment' errors. Additionally,
+                            refined the inference of <code>pathlib.Path</code> objects
+                            to ensure Pylint correctly identifies attributes on joined
+                            paths.
                         </p>
-                        <p><a href="https://github.com/pylint-dev/pylint/issues/10785">Issue #10785 - False positive unreachable error when overload + NoReturn is used</a></p>
-                        <p><a href="https://github.com/pylint-dev/pylint/issues/10743">Issue #10743 - Detect <code>unittest.fail()</code> calls for assignment warning</a></p>
+                        <p>What began as a class assignment wound up being an intense interest. 
+                            Contributing to Pylint was very fun. Writing code is very rewarding, 
+                            and systems design is great when you can build from scratch. However, 
+                            reading and understanding a mature codebase is equally satisfying while 
+                            being far less common work for me to encounter. In reviewing the Pylint 
+                            control flow I gained some confidence in myself as a coder that I may have 
+                            been lacking up to this point. Extremely friendly community and maintainers. 
+                            If anyone is curious about contributing to an OSS project, there are worse 
+                            repos to try it with.
+                        </p>
+                        <p><a href="https://github.com/pylint-dev/pylint/issues/10785">
+                            Issue #10785 - False positive unreachable error when
+                            overload + NoReturn is used</a></p>
+                        <p><a href="https://github.com/pylint-dev/pylint/issues/10743">
+                            Issue #10743 - Detect <code>unittest.fail()</code> calls
+                            for assignment warning</a></p>
                     </li>
                     <li>
                         <h3>Portfolio Website</h3>
-                        <p>The source code for this portfolio site. A FastAPI app using Pydantic for config validation and Jinja2 for templating. Deployed on Azure App Service with CI/CD and custom domain setup.</p>
-                        <p><a href="https://github.com/CodePapayas/zzwo-dot-com">Website Source Code</a></p>
+                        <p>The source code for this portfolio site. A FastAPI app using
+                            Pydantic for config validation and Jinja2 for templating.
+                            Deployed on Azure App Service with CI/CD and custom domain
+                            setup.</p>
+                        <p><a href="https://github.com/CodePapayas/zzwo-dot-com">
+                            Website Source Code</a></p>
                     </li>
                 </ul>
             </section>
