@@ -3,10 +3,9 @@
 {% block content %}
     <div class="train-page">
         <div class="fullscreen-photo">
-            <img src="{{ url_for('images', path='train.jpg') }}" alt="Train">
+            <img id="train-img" src="{{ url_for('images', path='train.jpg') }}" alt="Train">
         </div>
         <div class="train-overlay">
             <p class="box train-caption">This is the train picture.</p>
         </div>
-    </div>
 {% endblock %}

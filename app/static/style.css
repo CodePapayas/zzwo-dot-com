@@ -1,14 +1,14 @@
 /* Monochrome scheme
-   --charcoal: #595959 (dark)       → text, borders
-   --grey: #7f7f7f      (mid)        → nav, accents
+   --charcoal: #3a3a3a (dark)       → text, borders
+   --grey: #5e5e5e      (mid)        → nav, accents
    --silver: #a5a5a5    (light)      → cards, highlights
    --silver-2: #cccccc  (base)       → page background
    --white-smoke: #f2f2f2 (lightest) → surfaces
    Original palette preserved below; switch by setting data-theme="original" on <html>.
 */
 :root {
-    --charcoal: #595959;
-    --grey: #7f7f7f;
+    --charcoal: #3a3a3a;
+    --grey: #5e5e5e;
     --silver: #a5a5a5;
     --silver-2: #cccccc;
     --white-smoke: #f2f2f2;
@@ -146,19 +146,24 @@ a:hover {
     color: var(--color-text);
 }
 
-/* Page grid */
+/* Page grid — bento layout */
 .page {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    grid-template-columns: 1.4fr 0.9fr 1.1fr 1.6fr;
+    column-gap: 16px;
+    row-gap: 16px;
+    grid-template-areas:
+        "hero    hero    about   about"
+        "contact links   about   about"
+        "proj    proj    proj    proj";
+    align-items: start;
 }
 
-.left-col,
-.right-col {
-    display: grid;
-    gap: 28px;
-    align-content: start;
-}
+.page > #hero     { grid-area: hero; }
+.page > #about    { grid-area: about; }
+.page > #contact  { grid-area: contact; }
+.page > #links    { grid-area: links; }
+.page > #projects { grid-area: proj; }
 
 /* Box: ash-grey background, onyx border */
 .box {
@@ -301,6 +306,12 @@ h3 {
 
     .page {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "hero"
+            "about"
+            "contact"
+            "links"
+            "proj";
     }
 
     .hero {
@@ -338,12 +349,26 @@ h3 {
     display: block;
 }
 
+@keyframes train-belt {
+    0%   { object-position: 0% center; }
+    50%  { object-position: 100% center; }
+    100% { object-position: 0% center; }
+}
+
+.fullscreen-photo img.train-riding {
+    animation: train-belt 5s ease-in-out forwards;
+}
+
 .train-overlay {
     position: relative;
     z-index: 2;
     max-width: 980px;
     margin: 0 auto;
     padding: 32px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
 }
 
 .train-caption {
@@ -353,6 +378,57 @@ h3 {
     padding: 12px 20px;
     border: 2px solid var(--color-border);
     color: var(--color-text);
+}
+
+.train-btn {
+    padding: 10px 22px;
+    background: var(--color-nav-bg);
+    color: var(--color-nav-text);
+    border: 2px solid var(--color-border);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: var(--radius);
+}
+
+.train-btn:hover:not(:disabled) {
+    background: var(--color-nav-hover-bg);
+    color: var(--color-text);
+}
+
+.train-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.all-aboard {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 700;
+    color: var(--color-surface);
+    text-shadow: 3px 3px 0 var(--color-border);
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+@keyframes all-aboard-flash {
+    0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+    15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+    30%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    80%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+}
+
+.all-aboard.active {
+    animation: all-aboard-flash 2.5s ease-out forwards;
 }
 
 /* Resume page styles */
