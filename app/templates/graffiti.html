@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Graffiti Wall{% endblock %}
+{% block content %}
+<div class="graffiti-page">
+    <div class="graffiti-canvas-wrap" id="canvas-wrap">
+        <canvas id="graffiti-canvas"></canvas>
+    </div>
+    <aside class="graffiti-toolbar">
+        <div class="toolbar-tools">
+            <button class="tool-btn active" data-tool="pen">Pen</button>
+            <button class="tool-btn" disabled>Marker</button>
+            <button class="tool-btn" disabled>Spray</button>
+            <button class="tool-btn reset-btn" id="reset-btn">Reset</button>
+            <button class="tool-btn" disabled>Fill</button>
+        </div>
+        <div class="toolbar-controls">
+            <p class="label">Size &mdash; <span id="size-val">12</span>px</p>
+            <input type="range" id="size-slider" min="2" max="60" value="12">
+        </div>
+        <div class="toolbar-actions">
+            <button class="graffiti-action-btn" id="save-btn">Save</button>
+        </div>
+    </aside>
+</div>
+<script src="{{ url_for('static', path='js/graffiti.js') }}"></script>
+{% endblock %}
