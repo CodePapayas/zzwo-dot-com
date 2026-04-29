@@ -32,41 +32,42 @@ app.mount("/images", StaticFiles(directory=IMAGES_DIR), name="images")
 
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
+
+NAV_ITEMS = [
+    {"endpoint": "home", "text": "Home"},
+    {"endpoint": "resume", "text": "Resume"},
+    {"endpoint": "train", "text": "Train"},
+    {"endpoint": "graffiti", "text": "Graffiti Wall"},
+]
+
+
 @app.get("/")
 async def home(request: Request):
-    nav_items = [
-        {"endpoint": "home", "text": "Home"},
-        {"endpoint": "resume", "text": "Resume"},
-        {"endpoint": "train", "text": "Train"}
-    ]
-
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "nav_items": nav_items, "active_page": "home"},
+        {"request": request, "nav_items": NAV_ITEMS, "active_page": "home"},
     )
 
 
 @app.get("/resume")
 async def resume(request: Request):
-    nav_items = [
-        {"endpoint": "home", "text": "Home"},
-        {"endpoint": "resume", "text": "Resume"},
-        {"endpoint": "train", "text": "Train"},
-    ]
     return templates.TemplateResponse(
         "resume.html",
-        {"request": request, "nav_items": nav_items, "active_page": "resume"},
+        {"request": request, "nav_items": NAV_ITEMS, "active_page": "resume"},
     )
 
 
 @app.get("/train")
 async def train(request: Request):
-    nav_items = [
-        {"endpoint": "home", "text": "Home"},
-        {"endpoint": "resume", "text": "Resume"},
-        {"endpoint": "train", "text": "Train"},
-    ]
     return templates.TemplateResponse(
         "train.html",
-        {"request": request, "nav_items": nav_items, "active_page": "train"},
+        {"request": request, "nav_items": NAV_ITEMS, "active_page": "train"},
+    )
+
+
+@app.get("/graffiti")
+async def graffiti(request: Request):
+    return templates.TemplateResponse(
+        "graffiti.html",
+        {"request": request, "nav_items": NAV_ITEMS, "active_page": "graffiti"},
     )

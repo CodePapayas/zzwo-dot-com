@@ -576,3 +576,168 @@ h3 {
     }
 }
 
+/* Graffiti page */
+.graffiti-page {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.graffiti-canvas-wrap {
+    background: #f0f2e2;
+    border: 7px solid #2d3a1c;
+    border-radius: 10px;
+    padding: 10px;
+    line-height: 0;
+}
+
+#graffiti-canvas {
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    cursor: crosshair;
+}
+
+.graffiti-toolbar {
+    background: #f0f2e2;
+    border: 3px solid var(--color-border);
+    border-radius: 10px;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.toolbar-tools {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tool-btn {
+    width: 100%;
+    padding: 13px 8px;
+    background: var(--color-nav-bg);
+    color: var(--color-nav-text);
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.tool-btn:hover:not(:disabled) {
+    background: var(--color-nav-hover-bg);
+    color: var(--color-text);
+}
+
+.tool-btn.active {
+    background: var(--color-nav-hover-bg);
+    color: var(--color-text);
+}
+
+.tool-btn:disabled {
+    background: #c0c0c0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.tool-btn.reset-btn {
+    background: var(--color-nav-bg);
+    color: var(--color-nav-text);
+}
+
+.tool-btn.reset-btn:hover {
+    background: var(--color-nav-hover-bg);
+    color: var(--color-text);
+}
+
+.toolbar-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.color-swatches {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.swatch {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 2px solid var(--color-border);
+    cursor: pointer;
+    padding: 0;
+    border-radius: 4px;
+}
+
+.swatch.active {
+    outline: 3px solid #f0f2e2;
+    outline-offset: 1px;
+}
+
+#color-picker {
+    width: 100%;
+    height: 30px;
+    padding: 2px;
+    border: 2px solid var(--color-border);
+    background: #f0f2e2;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#size-slider {
+    width: 100%;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.toolbar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.graffiti-action-btn {
+    width: 100%;
+    padding: 10px 8px;
+    background: var(--color-nav-bg);
+    color: var(--color-nav-text);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.graffiti-action-btn:hover {
+    background: var(--color-nav-hover-bg);
+    color: var(--color-text);
+}
+
+@media (max-width: 700px) {
+    .graffiti-page {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar-tools {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .tool-btn {
+        flex: 1 1 80px;
+    }
+}
+
