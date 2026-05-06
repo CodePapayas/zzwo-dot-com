@@ -1,7 +1,8 @@
+import json
 import os
 from pathlib import Path
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
@@ -31,6 +32,53 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.mount("/images", StaticFiles(directory=IMAGES_DIR), name="images")
 
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
+
+
+class GraffitiRoom:
+    def __init__(self):
+        self.clients: list[WebSocket] = []
+        self.snapshot: bytes | None = None
+
+    async def connect(self, ws: WebSocket):
+        await ws.accept()
+        self.clients.append(ws)
+        if self.snapshot:
+            await ws.send_bytes(self.snapshot)
+        elif len(self.clients) > 1:
+            try:
+                await self.clients[0].send_text(json.dumps({"type": "req_state"}))
+            except Exception:
+                pass
+
+    def disconnect(self, ws: WebSocket):
+        if ws in self.clients:
+            self.clients.remove(ws)
+
+    async def broadcast_text(self, text: str, sender: WebSocket):
+        dead = []
+        for client in self.clients:
+            if client is not sender:
+                try:
+                    await client.send_text(text)
+                except Exception:
+                    dead.append(client)
+        for c in dead:
+            self.disconnect(c)
+
+    async def broadcast_bytes(self, data: bytes, sender: WebSocket):
+        self.snapshot = data
+        dead = []
+        for client in self.clients:
+            if client is not sender:
+                try:
+                    await client.send_bytes(data)
+                except Exception:
+                    dead.append(client)
+        for c in dead:
+            self.disconnect(c)
+
+
+room = GraffitiRoom()
 
 
 NAV_ITEMS = [
@@ -71,3 +119,17 @@ async def graffiti(request: Request):
         "graffiti.html",
         {"request": request, "nav_items": NAV_ITEMS, "active_page": "graffiti"},
     )
+
+
+@app.websocket("/ws/graffiti")
+async def graffiti_ws(ws: WebSocket):
+    await room.connect(ws)
+    try:
+        while True:
+            msg = await ws.receive()
+            if msg.get("text"):
+                await room.broadcast_text(msg["text"], ws)
+            elif msg.get("bytes"):
+                await room.broadcast_bytes(msg["bytes"], ws)
+    except WebSocketDisconnect:
+        room.disconnect(ws)

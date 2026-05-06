@@ -7,13 +7,25 @@
     </div>
     <aside class="graffiti-toolbar">
         <div class="toolbar-tools">
-            <button class="tool-btn active" data-tool="pen">Pen</button>
-            <button class="tool-btn" disabled>Marker</button>
-            <button class="tool-btn" disabled>Spray</button>
-            <button class="tool-btn reset-btn" id="reset-btn">Reset</button>
-            <button class="tool-btn" disabled>Fill</button>
+            <button class="tool-btn" id="pen-btn">Pen</button>
+            <button class="tool-btn" id="marker-btn">Marker</button>
+            <button class="tool-btn" id="spray-btn">Spray</button>
+            <button class="tool-btn" id="fill-btn">Fill</button>
+            <button class="tool-btn" id="reset-btn">Reset</button>
+            
         </div>
         <div class="toolbar-controls">
+            <p class="label">Color</p>
+            <div class="color-swatches" id="color-swatches">
+                <button class="swatch active" type="button" data-color="#111111" aria-label="Black" style="background:#111111;"></button>
+                <button class="swatch" type="button" data-color="#333333" aria-label="Dark gray" style="background:#333333;"></button>
+                <button class="swatch" type="button" data-color="#555555" aria-label="Gray" style="background:#555555;"></button>
+                <button class="swatch" type="button" data-color="#777777" aria-label="Medium gray" style="background:#777777;"></button>
+                <button class="swatch" type="button" data-color="#999999" aria-label="Light gray" style="background:#999999;"></button>
+                <button class="swatch" type="button" data-color="#bbbbbb" aria-label="Pale gray" style="background:#bbbbbb;"></button>
+                <button class="swatch" type="button" data-color="#dddddd" aria-label="Very light gray" style="background:#dddddd;"></button>
+                <button class="swatch" type="button" data-color="#d10f6f" aria-label="Deep pink" style="background:#d10f6f;"></button>
+            </div>
             <p class="label">Size &mdash; <span id="size-val">12</span>px</p>
             <input type="range" id="size-slider" min="2" max="60" value="12">
         </div>
