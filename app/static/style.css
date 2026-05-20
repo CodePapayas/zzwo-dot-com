@@ -585,11 +585,70 @@ h3 {
 }
 
 .graffiti-canvas-wrap {
+    position: relative;
     background: #f0f2e2;
     border: 7px solid #2d3a1c;
     border-radius: 10px;
     padding: 10px;
     line-height: 0;
+}
+
+.wipe-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--color-text);
+    background: rgba(240, 242, 226, 0.88);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    border-radius: 4px;
+}
+
+.wipe-overlay.active {
+    opacity: 1;
+}
+
+@keyframes warn-flash {
+    0% { opacity: 0; }
+    15% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.wipe-overlay.warning {
+    inset: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0 0 4px 4px;
+    background: rgba(190, 80, 0, 0.95);
+    color: #fff;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    padding: 6px 12px;
+    animation: warn-flash 1.2s ease forwards;
+    transition: none;
+}
+
+.wipe-overlay.countdown {
+    inset: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0 0 4px 4px;
+    background: rgba(160, 40, 0, 0.96);
+    color: #fff;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    padding: 10px 12px;
+    transition: none;
 }
 
 #graffiti-canvas {
@@ -724,6 +783,56 @@ h3 {
 .graffiti-action-btn:hover {
     background: var(--color-nav-hover-bg);
     color: var(--color-text);
+}
+
+.toolbar-status {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.client-count {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text);
+    opacity: 0.6;
+}
+
+.capacity-wrap {
+    width: 100%;
+    height: 5px;
+    background: var(--color-surface-alt);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.capacity-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--color-accent);
+    border-radius: 3px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.capacity-bar.warn {
+    background: #c98a00;
+}
+
+.capacity-bar.danger {
+    background: #c41010;
+}
+
+.capacity-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text);
+    opacity: 0.45;
 }
 
 @media (max-width: 700px) {

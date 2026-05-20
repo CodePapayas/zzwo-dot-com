@@ -14,6 +14,23 @@
     let currentColor = DEFAULT_COLOR;
     let ws = null;
     let applyingRemote = false;
+    let flashTimer = null;
+    let countdownInterval = null;
+    let canvasLocked = false;
+    const seenThresholds = new Set();
+    const WARN_THRESHOLDS = [
+        { pct: 0.50, msg: '50% full — download to save your work' },
+        { pct: 0.75, msg: '75% full' },
+        { pct: 0.90, msg: '90% full — wall clears soon!' },
+    ];
+
+    function flashWarning(msg) {
+        const overlay = document.getElementById('wipe-overlay');
+        clearTimeout(flashTimer);
+        overlay.textContent = msg;
+        overlay.classList.add('active', 'warning');
+        flashTimer = setTimeout(() => overlay.classList.remove('active', 'warning'), 1200);
+    }
 
     document.getElementById('pen-btn').addEventListener('click', () => currentTool = 'pen');
     document.getElementById('spray-btn').addEventListener('click', () => currentTool = 'spray');
@@ -97,7 +114,7 @@
         ctx.putImageData(image, 0, 0);
     }
 
-    function applyStroke(tool, color, strokeSize, lx, ly, x, y) {
+    function applyStroke(tool, color, strokeSize, lx, ly, x, y, dots) {
         ctx.globalCompositeOperation = 'source-over';
         ctx.strokeStyle = color;
         ctx.lineCap = 'round';
@@ -113,9 +130,15 @@
         } else if (tool === 'spray') {
             ctx.globalAlpha = 1.1;
             ctx.fillStyle = color;
-            for (let i = 0; i < 40; i++) {
-                const offset = getRandomOffset(strokeSize * 1.33);
-                ctx.fillRect(x + offset.x, y + offset.y, 1, 1);
+            if (dots) {
+                for (let i = 0; i < dots.length; i += 2) {
+                    ctx.fillRect(x + dots[i] * canvas.width, y + dots[i + 1] * canvas.height, 1, 1);
+                }
+            } else {
+                for (let i = 0; i < 40; i++) {
+                    const offset = getRandomOffset(strokeSize * 1.33);
+                    ctx.fillRect(x + offset.x, y + offset.y, 1, 1);
+                }
             }
         } else if (tool === 'marker') {
             ctx.globalAlpha = 0.36;
@@ -163,14 +186,47 @@
             const lx = msg.nlx * canvas.width;
             const ly = msg.nly * canvas.height;
             const s = msg.ns * canvas.width;
-            applyStroke(msg.tool, msg.color, s, lx, ly, x, y);
+            applyStroke(msg.tool, msg.color, s, lx, ly, x, y, msg.dots);
         } else if (msg.type === 'fill') {
             fillAt(msg.nx * canvas.width, msg.ny * canvas.height, msg.color);
         } else if (msg.type === 'reset') {
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.globalAlpha = 1;
-            ctx.fillStyle = CANVAS_BG;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            seenThresholds.clear();
+            clearTimeout(flashTimer);
+            clearInterval(countdownInterval);
+            if (msg.auto) {
+                const overlay = document.getElementById('wipe-overlay');
+                overlay.classList.remove('warning');
+                canvasLocked = true;
+                document.getElementById('reset-btn').disabled = true;
+                overlay.classList.add('active', 'countdown');
+                let secs = 10;
+                overlay.textContent = `wall full — save now (${secs})`;
+                countdownInterval = setInterval(() => {
+                    secs--;
+                    if (secs <= 0) {
+                        clearInterval(countdownInterval);
+                        canvasLocked = false;
+                        document.getElementById('reset-btn').disabled = false;
+                        overlay.textContent = 'wall cleared';
+                        overlay.classList.remove('countdown');
+                        ctx.globalCompositeOperation = 'source-over';
+                        ctx.globalAlpha = 1;
+                        ctx.fillStyle = CANVAS_BG;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        setTimeout(() => overlay.classList.remove('active'), 800);
+                    } else {
+                        overlay.textContent = `wall full — save now (${secs})`;
+                    }
+                }, 1000);
+            } else {
+                canvasLocked = false;
+                const overlay = document.getElementById('wipe-overlay');
+                overlay.classList.remove('active', 'warning', 'countdown');
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = CANVAS_BG;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
         }
         applyingRemote = false;
     }
@@ -178,27 +234,31 @@
     function initWS() {
         const proto = location.protocol === 'https:' ? 'wss' : 'ws';
         ws = new WebSocket(`${proto}://${location.host}/ws/graffiti`);
-        ws.binaryType = 'arraybuffer';
 
         ws.onmessage = (e) => {
-            if (e.data instanceof ArrayBuffer) {
-                const blob = new Blob([e.data], { type: 'image/png' });
-                const url = URL.createObjectURL(blob);
-                const img = new Image();
-                img.onload = () => {
-                    ctx.globalAlpha = 1;
-                    ctx.globalCompositeOperation = 'source-over';
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    URL.revokeObjectURL(url);
-                };
-                img.src = url;
-                return;
-            }
             const msg = JSON.parse(e.data);
-            if (msg.type === 'req_state') {
-                canvas.toBlob(blob => {
-                    blob.arrayBuffer().then(buf => ws.send(buf));
-                }, 'image/png');
+            if (msg.type === 'clients') {
+                const el = document.getElementById('client-count');
+                if (el) el.textContent = `${msg.count} online`;
+                if (msg.maxEvents != null) {
+                    const pct = msg.eventCount / msg.maxEvents;
+                    const bar = document.getElementById('capacity-bar');
+                    const label = document.getElementById('capacity-label');
+                    if (bar) {
+                        bar.style.width = `${Math.min(pct * 100, 100)}%`;
+                        bar.classList.toggle('warn', pct >= 0.6 && pct < 0.85);
+                        bar.classList.toggle('danger', pct >= 0.85);
+                    }
+                    if (label) label.textContent = `${msg.eventCount} / ${msg.maxEvents}`;
+                    let toFlash = null;
+                    for (const t of WARN_THRESHOLDS) {
+                        if (pct >= t.pct && !seenThresholds.has(t.pct)) {
+                            seenThresholds.add(t.pct);
+                            toFlash = t;
+                        }
+                    }
+                    if (toFlash) flashWarning(toFlash.msg);
+                }
                 return;
             }
             applyRemoteEvent(msg);
@@ -208,6 +268,7 @@
     }
 
     function startDraw(e) {
+        if (canvasLocked) return;
         e.preventDefault();
         [lastX, lastY] = getPos(e);
 
@@ -230,7 +291,7 @@
     }
 
     function draw(e) {
-        if (!drawing || currentTool === 'fill') return;
+        if (!drawing || currentTool === 'fill' || canvasLocked) return;
         e.preventDefault();
         const [x, y] = getPos(e);
 
@@ -238,6 +299,8 @@
         ctx.strokeStyle = currentColor;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
+
+        let sprayDots = null;
 
         if (currentTool === 'pen') {
             ctx.globalAlpha = 1.0;
@@ -247,10 +310,11 @@
         } else if (currentTool === 'spray') {
             ctx.globalAlpha = 1.1;
             ctx.fillStyle = currentColor;
-            const density = 40;
-            for (let i = 0; i < density; i++) {
+            sprayDots = [];
+            for (let i = 0; i < 40; i++) {
                 const offset = getRandomOffset(size * 1.33);
                 ctx.fillRect(x + offset.x, y + offset.y, 1, 1);
+                sprayDots.push(offset.x / canvas.width, offset.y / canvas.height);
             }
         } else if (currentTool === 'marker') {
             ctx.globalAlpha = 0.36;
@@ -260,7 +324,7 @@
         }
 
         if (!applyingRemote) {
-            sendEvent({
+            const event = {
                 type: 'stroke',
                 tool: currentTool,
                 color: currentColor,
@@ -269,7 +333,9 @@
                 nly: lastY / canvas.height,
                 nx: x / canvas.width,
                 ny: y / canvas.height,
-            });
+            };
+            if (sprayDots) event.dots = sprayDots;
+            sendEvent(event);
         }
 
         ctx.beginPath();

@@ -4,6 +4,7 @@
 <div class="graffiti-page">
     <div class="graffiti-canvas-wrap" id="canvas-wrap">
         <canvas id="graffiti-canvas"></canvas>
+        <div class="wipe-overlay" id="wipe-overlay">wall cleared</div>
     </div>
     <aside class="graffiti-toolbar">
         <div class="toolbar-tools">
@@ -31,6 +32,13 @@
         </div>
         <div class="toolbar-actions">
             <button class="graffiti-action-btn" id="save-btn">Save</button>
+        </div>
+        <div class="toolbar-status">
+            <span id="client-count" class="client-count">1 online</span>
+            <div class="capacity-wrap">
+                <div class="capacity-bar" id="capacity-bar"></div>
+            </div>
+            <span id="capacity-label" class="capacity-label">0 / 30</span>
         </div>
     </aside>
 </div>
