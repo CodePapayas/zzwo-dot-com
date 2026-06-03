@@ -1,5 +1,7 @@
+import asyncio
 import json
 import os
+import time
 from pathlib import Path
 
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
@@ -34,29 +36,117 @@ app.mount("/images", StaticFiles(directory=IMAGES_DIR), name="images")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
+_MAX_CLIENTS = 50
+_MAX_EVENTS = 10_000
+_MAX_TEXT_BYTES = 2048
+_WIPE_COUNTDOWN = 10
+_WIPE_INTERVAL = 3600  # 1 hour
+
+
 class GraffitiRoom:
     def __init__(self):
-        self.clients: list[WebSocket] = []
-        self.snapshot: bytes | None = None
+        self.clients: set[WebSocket] = set()
+        self.events: list[str] = []
+        self.locked: bool = False
+        self._wipe_task: asyncio.Task | None = None
+        self._wipe_at: float | None = None
 
-    async def connect(self, ws: WebSocket):
-        await ws.accept()
-        self.clients.append(ws)
-        if self.snapshot:
-            await ws.send_bytes(self.snapshot)
-        elif len(self.clients) > 1:
+    def _wipe_in_seconds(self) -> float | None:
+        if self._wipe_at is None:
+            return None
+        return max(0.0, self._wipe_at - time.time())
+
+    def _cancel_wipe_timer(self):
+        if self._wipe_task and not self._wipe_task.done():
+            self._wipe_task.cancel()
+        self._wipe_task = None
+        self._wipe_at = None
+
+    def _schedule_wipe(self):
+        self._cancel_wipe_timer()
+        self._wipe_at = time.time() + _WIPE_INTERVAL
+        self._wipe_task = asyncio.create_task(self._timed_wipe())
+
+    async def _timed_wipe(self):
+        await asyncio.sleep(_WIPE_INTERVAL)
+        await self._do_wipe(reason="time")
+
+    async def _unlock_after_countdown(self):
+        await asyncio.sleep(_WIPE_COUNTDOWN)
+        self.locked = False
+        await self._broadcast_meta()
+
+    async def _do_wipe(self, reason: str):
+        self.locked = True
+        self.events.clear()
+        self._cancel_wipe_timer()
+        asyncio.create_task(self._unlock_after_countdown())
+        wipe = json.dumps({"type": "reset", "auto": True, "reason": reason})
+        dead = []
+        for client in list(self.clients):
             try:
-                await self.clients[0].send_text(json.dumps({"type": "req_state"}))
+                await client.send_text(wipe)
             except Exception:
-                pass
+                dead.append(client)
+        for c in dead:
+            self.disconnect(c)
+        await self._broadcast_meta()
+
+    async def connect(self, ws: WebSocket) -> bool:
+        if len(self.clients) >= _MAX_CLIENTS:
+            await ws.close(code=1008)
+            return False
+        await ws.accept()
+        self.clients.add(ws)
+        await self._broadcast_meta()
+        for event in self.events:
+            try:
+                await ws.send_text(event)
+            except Exception:
+                break
+        return True
 
     def disconnect(self, ws: WebSocket):
-        if ws in self.clients:
-            self.clients.remove(ws)
+        self.clients.discard(ws)
+
+    async def _broadcast_meta(self):
+        wipe_in = self._wipe_in_seconds()
+        payload: dict = {
+            "type": "clients",
+            "count": len(self.clients),
+            "eventCount": len(self.events),
+            "maxEvents": _MAX_EVENTS,
+        }
+        if wipe_in is not None:
+            payload["wipeIn"] = wipe_in
+        msg = json.dumps(payload)
+        dead = []
+        for client in list(self.clients):
+            try:
+                await client.send_text(msg)
+            except Exception:
+                dead.append(client)
+        for c in dead:
+            self.disconnect(c)
 
     async def broadcast_text(self, text: str, sender: WebSocket):
+        msg = json.loads(text)
+        if msg.get("type") == "reset":
+            self.locked = False
+            self.events.clear()
+            self._cancel_wipe_timer()
+        elif self.locked:
+            return
+        else:
+            if not self.events:
+                self._schedule_wipe()
+            self.events.append(text)
+            if len(self.events) >= _MAX_EVENTS:
+                await self._do_wipe(reason="full")
+                return
+
         dead = []
-        for client in self.clients:
+        for client in list(self.clients):
             if client is not sender:
                 try:
                     await client.send_text(text)
@@ -64,18 +154,7 @@ class GraffitiRoom:
                     dead.append(client)
         for c in dead:
             self.disconnect(c)
-
-    async def broadcast_bytes(self, data: bytes, sender: WebSocket):
-        self.snapshot = data
-        dead = []
-        for client in self.clients:
-            if client is not sender:
-                try:
-                    await client.send_bytes(data)
-                except Exception:
-                    dead.append(client)
-        for c in dead:
-            self.disconnect(c)
+        await self._broadcast_meta()
 
 
 room = GraffitiRoom()
@@ -123,13 +202,18 @@ async def graffiti(request: Request):
 
 @app.websocket("/ws/graffiti")
 async def graffiti_ws(ws: WebSocket):
-    await room.connect(ws)
+    if not await room.connect(ws):
+        return
     try:
         while True:
             msg = await ws.receive()
-            if msg.get("text"):
-                await room.broadcast_text(msg["text"], ws)
-            elif msg.get("bytes"):
-                await room.broadcast_bytes(msg["bytes"], ws)
+            if msg["type"] == "websocket.disconnect":
+                break
+            text = msg.get("text")
+            if text is not None and len(text) <= _MAX_TEXT_BYTES:
+                await room.broadcast_text(text, ws)
     except WebSocketDisconnect:
+        pass
+    finally:
         room.disconnect(ws)
+        await room._broadcast_meta()
