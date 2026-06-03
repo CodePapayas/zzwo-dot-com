@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Graffiti Wall{% endblock %}
+{% block content %}
+<div class="graffiti-page">
+    <div class="graffiti-canvas-wrap" id="canvas-wrap">
+        <canvas id="graffiti-canvas"></canvas>
+        <div class="wipe-overlay" id="wipe-overlay">wall cleared</div>
+    </div>
+    <aside class="graffiti-toolbar">
+        <div class="toolbar-tools">
+            <button class="tool-btn" id="pen-btn">Pen</button>
+            <button class="tool-btn" id="marker-btn">Marker</button>
+            <button class="tool-btn" id="spray-btn">Spray</button>
+            <button class="tool-btn" id="fill-btn">Fill</button>
+            <button class="tool-btn" id="reset-btn">Reset</button>
+            
+        </div>
+        <div class="toolbar-controls">
+            <p class="label">Color</p>
+            <div class="color-swatches" id="color-swatches">
+                <button class="swatch active" type="button" data-color="#111111" aria-label="Black" style="background:#111111;"></button>
+                <button class="swatch" type="button" data-color="#333333" aria-label="Dark gray" style="background:#333333;"></button>
+                <button class="swatch" type="button" data-color="#555555" aria-label="Gray" style="background:#555555;"></button>
+                <button class="swatch" type="button" data-color="#777777" aria-label="Medium gray" style="background:#777777;"></button>
+                <button class="swatch" type="button" data-color="#999999" aria-label="Light gray" style="background:#999999;"></button>
+                <button class="swatch" type="button" data-color="#bbbbbb" aria-label="Pale gray" style="background:#bbbbbb;"></button>
+                <button class="swatch" type="button" data-color="#dddddd" aria-label="Very light gray" style="background:#dddddd;"></button>
+                <button class="swatch" type="button" data-color="#d10f6f" aria-label="Deep pink" style="background:#d10f6f;"></button>
+            </div>
+            <p class="label">Size &mdash; <span id="size-val">12</span>px</p>
+            <input type="range" id="size-slider" min="2" max="60" value="12">
+        </div>
+        <div class="toolbar-actions">
+            <button class="graffiti-action-btn" id="save-btn">Save</button>
+        </div>
+        <div class="toolbar-status">
+            <span id="client-count" class="client-count">1 online</span>
+            <div class="capacity-wrap">
+                <div class="capacity-bar" id="capacity-bar"></div>
+            </div>
+            <span id="capacity-label" class="capacity-label">0 / 10000</span>
+            <span id="wipe-timer" class="wipe-timer"></span>
+        </div>
+    </aside>
+</div>
+<script src="{{ url_for('static', path='js/graffiti.js') }}"></script>
+{% endblock %}
