@@ -16,13 +16,52 @@
     let applyingRemote = false;
     let flashTimer = null;
     let countdownInterval = null;
+    let wipeTimerInterval = null;
+    let wipeAt = null;
     let canvasLocked = false;
+    let freezeActive = false;
     const seenThresholds = new Set();
     const WARN_THRESHOLDS = [
         { pct: 0.50, msg: '50% full — download to save your work' },
         { pct: 0.75, msg: '75% full' },
         { pct: 0.90, msg: '90% full — wall clears soon!' },
     ];
+
+    function updateWipeTimerDisplay() {
+        const el = document.getElementById('wipe-timer');
+        if (!el) return;
+        if (wipeAt === null) { el.textContent = ''; return; }
+        const secs = Math.max(0, Math.round((wipeAt - Date.now()) / 1000));
+        el.textContent = `wipe in ${secs}s`;
+        const soon = secs <= 10;
+        el.classList.toggle('wipe-timer-soon', soon);
+        if (soon) el.classList.remove('wipe-timer-fresh');
+    }
+
+    function startWipeTimerInterval(fresh) {
+        clearInterval(wipeTimerInterval);
+        if (fresh) {
+            const el = document.getElementById('wipe-timer');
+            if (el) {
+                el.classList.remove('wipe-timer-fresh');
+                void el.offsetWidth;
+                el.classList.add('wipe-timer-fresh');
+            }
+        }
+        updateWipeTimerDisplay();
+        wipeTimerInterval = setInterval(() => {
+            if (wipeAt === null) { clearInterval(wipeTimerInterval); return; }
+            updateWipeTimerDisplay();
+        }, 1000);
+    }
+
+    function startWipeTimer(seconds) {
+        const newWipeAt = Date.now() + seconds * 1000;
+        const isReset = wipeAt === null || newWipeAt > wipeAt + 30000;
+        wipeAt = newWipeAt;
+        if (freezeActive) { updateWipeTimerDisplay(); return; }
+        startWipeTimerInterval(isReset);
+    }
 
     function flashWarning(msg) {
         const overlay = document.getElementById('wipe-overlay');
@@ -193,19 +232,25 @@
             seenThresholds.clear();
             clearTimeout(flashTimer);
             clearInterval(countdownInterval);
+            clearInterval(wipeTimerInterval);
+            wipeAt = null;
+            updateWipeTimerDisplay();
             if (msg.auto) {
                 const overlay = document.getElementById('wipe-overlay');
                 overlay.classList.remove('warning');
                 canvasLocked = true;
+                freezeActive = true;
                 document.getElementById('reset-btn').disabled = true;
                 overlay.classList.add('active', 'countdown');
+                const isFull = msg.reason === 'full';
                 let secs = 10;
-                overlay.textContent = `wall full — save now (${secs})`;
+                overlay.textContent = isFull ? `wall full — save now (${secs})` : `wall wiped — draw again (${secs})`;
                 countdownInterval = setInterval(() => {
                     secs--;
                     if (secs <= 0) {
                         clearInterval(countdownInterval);
                         canvasLocked = false;
+                        freezeActive = false;
                         document.getElementById('reset-btn').disabled = false;
                         overlay.textContent = 'wall cleared';
                         overlay.classList.remove('countdown');
@@ -214,12 +259,14 @@
                         ctx.fillStyle = CANVAS_BG;
                         ctx.fillRect(0, 0, canvas.width, canvas.height);
                         setTimeout(() => overlay.classList.remove('active'), 800);
+                        if (wipeAt !== null) startWipeTimerInterval(false);
                     } else {
-                        overlay.textContent = `wall full — save now (${secs})`;
+                        overlay.textContent = isFull ? `wall full — save now (${secs})` : `wall wiped — draw again (${secs})`;
                     }
                 }, 1000);
             } else {
                 canvasLocked = false;
+                freezeActive = false;
                 const overlay = document.getElementById('wipe-overlay');
                 overlay.classList.remove('active', 'warning', 'countdown');
                 ctx.globalCompositeOperation = 'source-over';
@@ -259,6 +306,7 @@
                     }
                     if (toFlash) flashWarning(toFlash.msg);
                 }
+                if (msg.wipeIn != null) startWipeTimer(msg.wipeIn);
                 return;
             }
             applyRemoteEvent(msg);

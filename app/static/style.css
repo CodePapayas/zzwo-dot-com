@@ -835,6 +835,30 @@ h3 {
     opacity: 0.45;
 }
 
+.wipe-timer {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text);
+    opacity: 0.45;
+}
+
+@keyframes wipe-fresh {
+    0%   { color: #3aad5c; opacity: 0.9; }
+    100% { color: var(--color-text); opacity: 0.45; }
+}
+
+.wipe-timer.wipe-timer-fresh {
+    animation: wipe-fresh 5s ease-out forwards;
+}
+
+.wipe-timer.wipe-timer-soon {
+    animation: none;
+    color: #c41010;
+    opacity: 0.85;
+}
+
 @media (max-width: 700px) {
     .graffiti-page {
         grid-template-columns: 1fr;
