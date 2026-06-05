@@ -1,87 +1,166 @@
-{% extends "base.html" %}
-{% block title %}Home Page{% endblock %}
-{% block content %}
-    <main class="page">
-        <header class="hero box" id="hero">
-            <img class="avatar" src="{{ url_for('images', path='headshot.jpg') }}" alt="Headshot of Zach">
-            <div class="hero-text">
-                <p class="eyebrow">CodePapayas</p>
-                <h1 class="header">Zach Wilkins-Olson</h1>
-                <p class="tagline">Software Engineer | OSU Class of '26</p>
+{% extends "base.html" %} {% block title %}Home Page{% endblock %} {% block
+content %}
+<main class="page">
+    <header class="hero box" id="hero">
+        <img
+            class="avatar"
+            src="{{ url_for('images', path='headshot.jpg') }}"
+            alt="Headshot of Zach"
+        />
+        <div class="hero-text">
+            <p class="eyebrow">CodePapayas</p>
+            <h1 class="header">Zach Wilkins-Olson</h1>
+            <p class="tagline">Software Engineer | OSU Class of '26</p>
+        </div>
+    </header>
+
+    <section class="box" id="about">
+        <h2>Hey there!</h2>
+        <p>
+            My name is Zach Wilkins-Olson. I had AI write this initially, but it
+            didn't sound at all like me so I'm rewriting it. The original plan
+            for this website was to check a box in the hiring process. As I
+            worked on this, however, I found that I did not like being
+            represented by a statistical language model's interpretation of who
+            I am. Instead, I am going to treat this as a stream-of-conscience
+            dev-blog-lite.
+        </p>
+        <p>
+            Currently working on an EHR migration and implementation for my
+            employer. This is an interesting and novel project for me. The
+            present EHR has been in place for nearly 14 years, so the amount of
+            data that needs to be moved is quite large. Should be an interesting
+            and educational process!
+        </p>
+    </section>
+
+    <section class="box" id="contact">
+        <h2>Contact</h2>
+        <div class="grid">
+            <div>
+                <p class="label">Email</p>
+                <p>zzwo@codepapayas.com</p>
             </div>
-        </header>
-
-        <section class="box" id="about">
-            <h2>Hey there!</h2>
-            <p>
-                My name is Zach Wilkins-Olson. I had AI write this initially, but it didn't sound at all like me so I'm rewriting it. The original plan for this website was to check a box in the hiring process. As I worked on this, however, I found that I did not like being represented by a statistical language model's interpretation of who I am. Instead, I am going to treat this as a stream-of-conscience dev-blog-lite.
-            </p>
-            <p>
-                For now, I don't have a lot to add. I am finishing up my last 3 months at Oregon State University (current as of April 26), and am considering my options as I enter this new chapter of my career. I am currently working on a game idea: An isometric detective sim. There's a lot more to it, but that's for another post. Go Beavs!
-            </p>
-        </section>
-
-        <section class="box" id="contact">
-            <h2>Contact</h2>
-            <div class="grid">
-                <div>
-                    <p class="label">Email</p>
-                    <p>zzwo@codepapayas.com</p>
-                </div>
-                <!-- <div>
+            <!-- <div>
                     <p class="label">Phone</p>
                     <p>(206) 397-8306</p>
                 </div> -->
-                <div>
-                    <p class="label">Location</p>
-                    <p>PNW | Remote</p>
-                </div>
+            <div>
+                <p class="label">Location</p>
+                <p>PNW | Remote</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="box" id="links">
-            <h2>Links</h2>
-            <ul class="list links">
-                <li><a href="https://github.com/CodePapayas">GitHub</a></li>
-                <li><a href="https://www.linkedin.com/in/wilkinza/">LinkedIn</a></li>
-            </ul>
-        </section>
+    <section class="box" id="links">
+        <h2>Links</h2>
+        <ul class="list links">
+            <li><a href="https://github.com/CodePapayas">GitHub</a></li>
+            <li>
+                <a href="https://www.linkedin.com/in/wilkinza/">LinkedIn</a>
+            </li>
+        </ul>
+    </section>
 
-        <section class="box" id="projects">
-            <h2>What I'm Working On and What I've Done</h2>
-            <ul class="list">
-                <li>
-                    <h3>HIPAA | 42CFRpt2 MCP</h3>
-                    <p>
-                        FILL ME IN WITH INTERESTING INFORMATION
-                    </p>
-                    <p>This is an ongoing project. I use this as a sort of sandbox for a prototyping ideas and testing out configurations.</p>
-                    <p><a href="https://github.com/CodePapayas/pond_spawn">Pond Spawn GitHub</a></p>
-                </li>
-                <li>
-                    <h3>Pond Spawn</h3>
-                    <p>Artificial life simulation where agents with unique neural network brains evolve through genetic mutation. Each agent perceives its environment, makes decisions via a feedforward network (5→8→8→8→6), and passes mutated genomes to offspring. Built with Python, PyTorch, NumPy, Pygame, and Matplotlib.
-                    </p>
-                    <p>This is an ongoing project. I use this as a sort of sandbox for a prototyping ideas and testing out configurations.</p>
-                    <p><a href="https://github.com/CodePapayas/pond_spawn">Pond Spawn GitHub</a></p>
-                </li>
-                <li>
-                    <h3>Pylint (Open Source Contributor)</h3>
-                    <p>
-                        Contributed to the core static analysis engine of Pylint to improve inference accuracy.
-                        Engineered logic to correctly handle the control flow of <code>unittest.TestCase.fail()</code>,
-                        preventing false-positive 'used-before-assignment' errors. Additionally, refined the
-                        inference of <code>pathlib.Path</code> objects to ensure Pylint correctly identifies attributes on joined paths.
-                    </p>
-                    <p><a href="https://github.com/pylint-dev/pylint/issues/10785">Issue #10785 - False positive unreachable error when overload + NoReturn is used</a></p>
-                    <p><a href="https://github.com/pylint-dev/pylint/issues/10743">Issue #10743 - Detect <code>unittest.fail()</code> calls for assignment warning</a></p>
-                </li>
-                <li>
-                    <h3>Portfolio Website</h3>
-                    <p>The source code for this portfolio site. A FastAPI app using Pydantic for config validation and Jinja2 for templating. Deployed on Azure App Service with CI/CD and custom domain setup.</p>
-                    <p><a href="https://github.com/CodePapayas/zzwo-dot-com">Website Source Code</a></p>
-                </li>
-            </ul>
-        </section>
-    </main>
+    <section class="box" id="projects">
+        <h2>What I'm Working On and What I've Done</h2>
+        <ul class="list">
+            <li>
+                <h3>Pylint (Open Source Contributor)</h3>
+                <p>
+                    <a href="https://github.com/pylint-dev/pylint/issues/10785"
+                        >Issue #10785 - False positive unreachable error when
+                        overload + NoReturn is used</a
+                    >
+                </p>
+                <p>
+                    <a href="https://github.com/pylint-dev/pylint/issues/10743"
+                        >Issue #10743 - Detect
+                        <code>unittest.fail()</code> calls for assignment
+                        warning</a
+                    >
+                </p>
+            </li>
+            <li>
+                <h3>HIPAA | 42CFRpt2 MCP</h3>
+                <p>
+                    A local-first Model Context Protocol (MCP) server utilizing
+                    hybrid vector search for regulatory compliance citations.
+                </p>
+                <p>
+                    For this project, I wanted to improve my understanding of
+                    MCP/RAG systems as well as get more experience with word
+                    chunking/recognition systems. The architecture is such that
+                    the AI only retrieves information and never interprets it.
+                    Users can query the confidence score and matching logic that
+                    produced the answer, as well as retrieve exact text from the
+                    rules themselves.
+                </p>
+                <p>
+                    <a href="https://github.com/CodePapayas/hipaa-2-vec"
+                        >HIPAA-2-Vec GitHub</a
+                    >
+                </p>
+            </li>
+            <li>
+                <h3>A-Life Challeange '25-'26 (OSU Capstone Project)</h3>
+                <p>
+                    Grid-based artificial life simulation. Agents navigate a
+                    world, consume resources, reproduce, and evolve over
+                    thousands of ticks. Neural decision-making, persistent
+                    state, real-time visualizer. Built in C++17 with PostgreSQL
+                    persistence and an ImGui renderer.
+                </p>
+                <p>
+                    This project was immensely rewarding. I worked with an
+                    excellent team and learned so much about neural networks and
+                    C++ in general. I actually prefer the visualizer for this
+                    one to the PyGame system I created in my solo project as
+                    this one uses a Perlin noise generator to simulate chemical
+                    levels and create a very pretty grid for our agents to exist
+                    in.
+                </p>
+                <p>
+                    <a href="https://github.com/CodePapayas/OSU-Capstone-2026"
+                        >A-Life Challenge '25-'26 GitHub</a
+                    >
+                </p>
+            </li>
+            <li>
+                <h3>Pond Spawn</h3>
+                <p>
+                    Artificial life simulation where agents with unique neural
+                    network brains evolve through genetic mutation. Each agent
+                    perceives its environment, makes decisions via a feedforward
+                    network (5→8→8→8→6), and passes mutated genomes to
+                    offspring. Built with Python, PyTorch, NumPy, Pygame, and
+                    Matplotlib.
+                </p>
+                <p>
+                    This is an ongoing project. I use this as a sort of sandbox
+                    for a prototyping ideas and testing out configurations.
+                </p>
+                <p>
+                    <a href="https://github.com/CodePapayas/pond_spawn"
+                        >Pond Spawn GitHub</a
+                    >
+                </p>
+            </li>
+            <li>
+                <h3>Portfolio Website</h3>
+                <p>
+                    The source code for this portfolio site. A FastAPI app using
+                    Pydantic for config validation and Jinja2 for templating.
+                    Deployed on Azure App Service with CI/CD and custom domain
+                    setup.
+                </p>
+                <p>
+                    <a href="https://github.com/CodePapayas/zzwo-dot-com"
+                        >Website Source Code</a
+                    >
+                </p>
+            </li>
+        </ul>
+    </section>
+</main>
 {% endblock %}

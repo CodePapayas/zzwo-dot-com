@@ -1,104 +1,227 @@
-{% extends "base.html" %}
-{% block title %}Resume{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Resume{% endblock %} {% block content
+%}
 <div class="resume">
-  <header class="resume-header">
-    <h1>Zachary Wilkins-Olson</h1>
-    <p class="contact-info">
-      Eugene, OR 97405 | zzwo@codepapayas.com<br>
-      GitHub: github.com/CodePapayas | LinkedIn: linkedin.com/in/wilkinza
-    </p>
-  </header>
+    <header class="resume-header">
+        <h1>Zachary Wilkins-Olson</h1>
+        <p class="contact-info">
+            Eugene, OR &nbsp;·&nbsp; 541-674-8565 &nbsp;·&nbsp;
+            zach.w.olson@live.com<br />
+            GitHub: github.com/CodePapayas &nbsp;·&nbsp; LinkedIn:
+            linkedin.com/in/wilkinza &nbsp;·&nbsp; codepapayas.com
+        </p>
+    </header>
 
-  <section class="resume-section summary">
-    <h2>IT LEADER | HEALTHTECH OPERATIONS | HIPAA SECURITY OFFICER</h2>
-    <p>IT leader with a track record of building technical functions for 100+ person healthcare organizations. Experienced in navigating complex regulatory environments (OHA/HIPAA), managing $500K+ OpEx budgets, and designing scalable AI and data infrastructure.</p>
-  </section>
+    <section class="resume-section skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <strong>Languages</strong>
+                <p>Python, SQL (T-SQL / MySQL / SQLite), JavaScript</p>
+            </div>
+            <div class="skill-category">
+                <strong>Frameworks &amp; Libraries</strong>
+                <p>Flask, FastAPI, Express.js, PyTorch, NumPy, spaCy, Jinja2</p>
+            </div>
+            <div class="skill-category">
+                <strong>Data &amp; Search</strong>
+                <p>
+                    SQL Server, Snowflake, ChromaDB, BM25 (rank-bm25),
+                    reciprocal rank fusion, REDCap, SSRS
+                </p>
+            </div>
+            <div class="skill-category">
+                <strong>Infrastructure</strong>
+                <p>
+                    Azure (App Service / VM), Linux, GitHub Actions (CI/CD),
+                    Pylint, Ruff, Zero Trust, VMware
+                </p>
+            </div>
+            <div class="skill-category">
+                <strong>Auth &amp; Security</strong>
+                <p>
+                    RBAC, HMAC token signing, bcrypt, HIPAA / 42 CFR Part 2
+                    compliance, MFA, VPN, SSL/TLS
+                </p>
+            </div>
+            <div class="skill-category">
+                <strong>Healthcare</strong>
+                <p>
+                    EHR administration, EDI/HL7, telehealth platforms, HIPAA
+                    Security Officer
+                </p>
+            </div>
+            <div class="skill-category">
+                <strong>Other</strong>
+                <p>
+                    Power Automate, SharePoint, Pydantic v2, pyodbc, SMTP,
+                    gunicorn
+                </p>
+            </div>
+        </div>
+    </section>
 
-  <section class="resume-section experience">
-    <h2>Professional Experience</h2>
-    
-    <div class="job">
-      <h3>IT Manager & HIPAA Security Officer</h3>
-      <p class="job-meta">
-        Center for Family Development | Eugene, OR | July 2024 – Present
-      </p>
-      
-      <h4>Strategic Sourcing & Fiscal Oversight</h4>
-      <ul>
-        <li>Evaluated and selected a new EHR platform through a 6-month, multi-vendor procurement cycle, negotiating parallel bids with legal review to secure a $140K annual saving (47%) while expanding baseline features. Currently leading the 9-month implementation.</li>
-        <li>Identified the need for a managed laptop fleet, selected hardware specifications, and established an ongoing procurement and distribution pipeline in partnership with the MSP.</li>
-        <li>Scoped and managed a competitive RFP for physical security infrastructure (CCTV), ensuring HIPAA physical safeguard compliance through a unified technical roadmap.</li>
-        <li>Own the IT budget with independent signing authority up to $20K. Present technology initiatives to the board of directors and secure approval for major capital expenditures.</li>
-      </ul>
+    <section class="resume-section experience">
+        <h2>Professional Experience</h2>
 
-      <h4>Emerging Tech & Data Governance</h4>
-      <ul>
-        <li>Identified the organizational need for AI, introduced AI tools across clinical and administrative workflows, authored the governing usage policy, and established an executive technology committee to oversee AI strategy and broader technology direction. Currently designing a transition from standalone AI interfaces to a centralized Enterprise API service for improved security and HIPAA-compliant data residency.</li>
-        <li>Identified and secured organizational entry into the Oregon Health Authority (OHA) ROADS v2 beta pilot; manage SFTP reporting pipelines and contribute to regional health reporting standards.</li>
-        <li>Stood up a secure REDCap server environment, establishing data collection capability for clinical quality improvement and research initiatives.</li>
-      </ul>
+        <div class="job">
+            <h3>
+                IT Manager (Engineering &amp; Infrastructure) | HIPAA Security
+                Officer
+            </h3>
+            <p class="job-meta">
+                Center for Family Development | Eugene, OR | July 2024 – Present
+            </p>
+            <ul>
+                <li>
+                    Established the organization's first internal IT department,
+                    transitioning from 100% outsourced MSP to a strategic hybrid
+                    model; direct 2–3 dedicated engineers and coordinate a
+                    6-person technical team through a $220K managed services
+                    partnership.
+                </li>
+                <li>
+                    Manage $500K+ annual IT budget across EHR systems, security
+                    platforms, telehealth infrastructure, and MSP partnerships.
+                </li>
+                <li>
+                    Negotiated migration from $300K legacy EHR renewal to $160K
+                    contract, $140K annual savings (47%); identified material
+                    contract breach during due diligence.
+                </li>
+                <li>
+                    Replaced BYOD with a standardized Zero Trust device fleet
+                    (130+ endpoints) with MFA and always-on VPN; now a mature
+                    refresh cycle. Reduced HIPAA incidents 75% YoY.
+                </li>
+                <li>
+                    Serve as HIPAA Security Officer; maintain 100% compliance
+                    through annual SRAs, policy development, and incident
+                    response.
+                </li>
+                <li>
+                    Introduced AI tooling across clinical and administrative
+                    workflows, including AI scribes for clinical documentation;
+                    developed and maintain the associated governance policies
+                    ensuring HIPAA and 42 CFR Part 2 compliance.
+                </li>
+            </ul>
+        </div>
 
-      <h4>Operations & Security</h4>
-      <ul>
-        <li>Built the first internal IT department from scratch, eliminating $187K in redundant headcount while transitioning from a 100% outsourced model to a hybrid MSP partnership.</li>
-        <li>Renegotiated MSP contract to an all-you-can-eat service model with a 10% per-user discount, replacing the previous a la carte structure and saving roughly $30K annually.</li>
-        <li>Author, review, and approve organizational policies, procedures, and workflows across all departments with broad authority to ensure compliance and drive technology-driven process improvements.</li>
-        <li>Own HIPAA compliance for a 130+ device Zero Trust environment; reduced security incidents 75% year-over-year.</li>
-        <li>Designed and built a multi-stage automated enrollment system using Customer Voice, Power Automate, SharePoint, SQL Server, and Python. The system handles pre-screening with rules-based program routing, opens and closes enrollment by age group and program, generates intake documents, notifies staff of new enrollments, flags urgent social determinants of health responses for immediate follow-up, and feeds a custom matching algorithm to support client-therapist assignment.</li>
-        <li>Replaced a manual Excel-based room scheduling system with a custom Flask + SQL Server web application deployed on Azure App Service with GitHub Actions CI/CD, serving 50+ rooms across multiple buildings.</li>
-      </ul>
-    </div>
+        <div class="job">
+            <h3>System Administrator</h3>
+            <p class="job-meta">
+                Center for Family Development | Eugene, OR | May 2018 – July
+                2024
+            </p>
+            <ul>
+                <li>
+                    Managed CareLogic EHR system and all technology
+                    infrastructure for a 100+ person healthcare organization.
+                </li>
+                <li>
+                    Led immediate telehealth transformation during March 2020
+                    lockdown; enabled 100% remote operations within two weeks
+                    for 100+ staff.
+                </li>
+                <li>
+                    Implemented KPI-driven Zendesk ticketing system; halved
+                    maximum SLA response times from 48 to 24 hours.
+                </li>
+                <li>
+                    Orchestrated migration of 15,000+ patient records from
+                    legacy CareLogic to new EHR architecture with zero data loss
+                    and 99.9% uptime.
+                </li>
+            </ul>
+        </div>
+    </section>
 
-    <div class="job">
-      <h3>System Administrator</h3>
-      <p class="job-meta">Center for Family Development | Eugene, OR | May 2018 – July 2024</p>
-      <ul>
-        <li>Led a full remote telehealth rollout within two weeks during the March 2020 lockdown for 100+ staff.</li>
-        <li>Managed daily operations of the CareLogic EHR system, maintaining 99.9% uptime and data integrity across 15,000+ patient records. Certified Qualifacts System Administrator (2021).</li>
-        <li>Took over management of VBA and Pentaho reporting pipelines, delivering operational and clinical data to leadership.</li>
-        <li>Owned the IT onboarding process including EHR training for new hires; served as primary point of contact for day-to-day IT support across the organization.</li>
-        <li>Represented the organization at EHR partnership meetings, coordinating feature requests and system updates with Qualifacts.</li>
-      </ul>
-    </div>
-  </section>
+    <section class="resume-section projects">
+        <h2>Engineering Projects</h2>
 
-  <section class="resume-section education">
-    <h2>Education & Certifications</h2>
-    <div class="degree">
-      <strong>Bachelor of Science in Computer Science (June 2026)</strong><br>
-      Oregon State University<br>
-      <em>Notable Projects: Core contributor to Pylint (Open Source); Capstone focused on C++ neural network simulations.</em>
-    </div>
-    <div class="degree">
-      <strong>Associate Degree in General Studies</strong><br>
-      Lane Community College
-    </div>
-    <div class="degree">
-      <strong>Associate of Arts Oregon Transfer (AAOT)</strong><br>
-      Lane Community College
-    </div>
-    <div class="certification">
-      <strong>Certified Scrum Master (CSM)</strong>
-    </div>
-  </section>
+        <div class="project">
+            <h3>
+                Client Intake &amp; Screening Pipeline
+                <span class="project-status">(Production)</span>
+            </h3>
+            <p class="project-meta">
+                Python / SQL Server / Power Automate / SharePoint / SMTP
+            </p>
+            <ul>
+                <li>
+                    Built a multi-stage enrollment system serving a 100+ person
+                    healthcare org with conditional routing across nine
+                    programs, automated staff notifications for urgent needs,
+                    and an NLP-based provider matching algorithm.
+                </li>
+            </ul>
+        </div>
 
-  <section class="resume-section skills">
-    <h2>Technical Proficiencies</h2>
-    <div class="skills-grid">
-      <div class="skill-category">
-        <strong>Operations</strong>
-        <p>Vendor Management, RFP/Procurement, OpEx Budget Management ($500K+), MSP Partnership Oversight, Policy & Procedure Development, Cross-Departmental Workflow Design</p>
-      </div>
-      <div class="skill-category">
-        <strong>Technical</strong>
-        <p>Python, PowerShell, SQL (T-SQL/MySQL), JavaScript, Flask, FastAPI, Azure App Service, Entra ID/Azure AD, M365 Admin, Power Automate, SharePoint, SQL Server, VMware</p>
-      </div>
-      <div class="skill-category">
-        <strong>Compliance</strong>
-        <p>HIPAA Security Officer, 42 CFR Part 2, EDI/HL7, OHA ROADS v2, SRA Protocols</p>
-      </div>
-    </div>
-  </section>
+        <div class="project">
+            <h3>
+                Building Reservation &amp; Scheduling System
+                <span class="project-status">(Production)</span>
+            </h3>
+            <p class="project-meta">
+                Flask / SQL Server / Azure App Service / GitHub Actions
+            </p>
+            <ul>
+                <li>
+                    Replaced a manual process (printed Excel books across 4
+                    buildings, ~50 rooms) with a production web app supporting
+                    recurring schedules, real-time room search, and tiered
+                    access control. Serving 100+ daily active users.
+                </li>
+            </ul>
+        </div>
+
+        <div class="project">
+            <h3>
+                HIPAA Regulation Search Engine
+                <span class="project-status">(Production / Open Source)</span>
+            </h3>
+            <p class="project-meta">
+                Python / ChromaDB / FastMCP / spaCy / BM25
+            </p>
+            <ul>
+                <li>
+                    Built and open-sourced an MCP server that searches HIPAA and
+                    42 CFR Part 2 regulation text, returning precise section
+                    citations. Published as a pip-installable CLI with 90%+ test
+                    coverage.
+                </li>
+            </ul>
+        </div>
+
+        <div class="project">
+            <h3>REDCap Research Platform Deployment</h3>
+            <p class="project-meta">Linux / Azure VM / MySQL / HIPAA</p>
+            <ul>
+                <li>
+                    Acquired an institutional license and deployed a HIPAA/42
+                    CFR Part 2-compliant clinical research platform on Azure,
+                    integrated with the organizational EHR via Snowflake.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="resume-section education">
+        <h2>Education &amp; Certifications</h2>
+        <div class="degree">
+            <strong
+                >Bachelor of Science, Computer Science; Minor in
+                Business</strong
+            ><br />
+            Oregon State University
+        </div>
+        <div class="degree">
+            <strong>Associate of Arts Oregon Transfer (AAOT)</strong><br />
+            Lane Community College
+        </div>
+        <div class="certification">
+            <strong>Certified Scrum Master (CSM)</strong>
+        </div>
+    </section>
 </div>
 {% endblock %}
